@@ -1,0 +1,1825 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="no-referrer">
+    <title>متتبع الفسيولوجيا العصبية - زيدان</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="متتبع زيدان">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="متتبع زيدان">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiMyNTYzZWIiLz4KPHN2ZyB4PSI0OCIgeT0iNDgiIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0tMiAxNWwtNS01IDEuNDEtMS40MUwxMCAxNC4xN2w3LjU5LTcuNTlMMTkgOGwtOSA5eiIvPgo8L3N2Zz4KPC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiMyNTYzZWIiLz4KPHN2ZyB4PSI0OCIgeT0iNDgiIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0tMiAxNWwtNS01IDEuNDEtMS40MUwxMCAxNC4xN2w3LjU5LTcuNTlMMTkgOGwtOSA5eiIvPgo8L3N2Zz4KPC9zdmc+">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* RTL/LTR Support */
+        [dir="rtl"] .rtl\:text-right { text-align: right; }
+        [dir="rtl"] .rtl\:text-left { text-align: left; }
+        [dir="rtl"] .rtl\:mr-3 { margin-right: 0.75rem; }
+        [dir="rtl"] .rtl\:ml-3 { margin-left: 0.75rem; }
+        [dir="rtl"] .rtl\:pr-3 { padding-right: 0.75rem; }
+        [dir="rtl"] .rtl\:pl-3 { padding-left: 0.75rem; }
+        [dir="rtl"] .rtl\:float-right { float: right; }
+        [dir="rtl"] .rtl\:float-left { float: left; }
+        
+        [dir="ltr"] .ltr\:text-left { text-align: left; }
+        [dir="ltr"] .ltr\:text-right { text-align: right; }
+        [dir="ltr"] .ltr\:ml-3 { margin-left: 0.75rem; }
+        [dir="ltr"] .ltr\:mr-3 { margin-right: 0.75rem; }
+        [dir="ltr"] .ltr\:pl-3 { padding-left: 0.75rem; }
+        [dir="ltr"] .ltr\:pr-3 { padding-right: 0.75rem; }
+        [dir="ltr"] .ltr\:float-left { float: left; }
+        [dir="ltr"] .ltr\:float-right { float: right; }
+        
+        /* Animations */
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .slide-in { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        /* Mobile optimizations */
+        .mobile-safe-area { padding-bottom: env(safe-area-inset-bottom); }
+        .touch-target { min-height: 44px; min-width: 44px; }
+        
+        /* Offline indicator */
+        .offline-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ef4444;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        .offline-indicator.show {
+            transform: translateY(0);
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #2563eb;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Install prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: #2563eb;
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(100px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        .install-prompt.show {
+            transform: translateY(0);
+        }
+        
+        /* Language switcher */
+        .lang-switcher {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            min-width: 120px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .lang-dropdown.show {
+            display: block;
+        }
+        
+        .lang-option {
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .lang-option:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .lang-option.active {
+            background-color: #2563eb;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans">
+    <!-- Offline Indicator -->
+    <div id="offlineIndicator" class="offline-indicator">
+        <i class="fas fa-wifi-slash mr-2"></i>
+        <span data-translate="offline_message">أنت غير متصل بالإنترنت - يعمل التطبيق في وضع عدم الاتصال</span>
+    </div>
+
+    <!-- Install Prompt -->
+    <div id="installPrompt" class="install-prompt">
+        <div class="flex items-center justify-between">
+            <div class="flex-1">
+                <h3 class="font-semibold mb-1" data-translate="install_app">تثبيت التطبيق</h3>
+                <p class="text-sm opacity-90" data-translate="install_description">أضف التطبيق إلى الشاشة الرئيسية للوصول السريع</p>
+            </div>
+            <div class="flex gap-2 mr-4">
+                <button id="installBtn" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium" data-translate="install">
+                    تثبيت
+                </button>
+                <button id="dismissInstall" class="text-white opacity-75 hover:opacity-100">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex items-center justify-between">
+            <h1 class="text-xl font-bold" data-translate="app_title">متتبع الفسيولوجيا العصبية - زيدان</h1>
+            <div class="flex items-center gap-3">
+                <!-- Language Switcher -->
+                <div class="lang-switcher">
+                    <button id="langToggle" class="p-2 hover:bg-blue-700 rounded-lg touch-target flex items-center gap-2">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLang">العربية</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="langDropdown" class="lang-dropdown">
+                        <div class="lang-option" data-lang="ar">
+                            <i class="fas fa-check mr-2 opacity-0" id="check-ar"></i>
+                            العربية
+                        </div>
+                        <div class="lang-option" data-lang="en">
+                            <i class="fas fa-check mr-2 opacity-0" id="check-en"></i>
+                            English
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="syncStatus" class="flex items-center text-sm">
+                    <div class="spinner hidden" id="syncSpinner"></div>
+                    <i class="fas fa-check-circle text-green-300" id="syncSuccess"></i>
+                    <i class="fas fa-exclamation-triangle text-yellow-300 hidden" id="syncError"></i>
+                </div>
+                <button id="syncBtn" class="p-2 hover:bg-blue-700 rounded-lg touch-target">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main App Container -->
+    <div id="mainApp">
+        <!-- Bottom Navigation -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 mobile-safe-area">
+            <div class="flex justify-around py-2">
+                <button onclick="showPage('dashboard')" class="nav-btn flex flex-col items-center p-2 text-gray-600 touch-target">
+                    <i class="fas fa-chart-line text-xl"></i>
+                    <span class="text-xs mt-1" data-translate="dashboard">لوحة التحكم</span>
+                </button>
+                <button onclick="showPage('addCase')" class="nav-btn flex flex-col items-center p-2 text-gray-600 touch-target">
+                    <i class="fas fa-plus-circle text-xl"></i>
+                    <span class="text-xs mt-1" data-translate="add_case">إضافة حالة</span>
+                </button>
+                <button onclick="showPage('cases')" class="nav-btn flex flex-col items-center p-2 text-gray-600 touch-target">
+                    <i class="fas fa-list text-xl"></i>
+                    <span class="text-xs mt-1" data-translate="cases">الحالات</span>
+                </button>
+                <button onclick="showPage('reports')" class="nav-btn flex flex-col items-center p-2 text-gray-600 touch-target">
+                    <i class="fas fa-chart-bar text-xl"></i>
+                    <span class="text-xs mt-1" data-translate="reports">التقارير</span>
+                </button>
+                <button onclick="showPage('settings')" class="nav-btn flex flex-col items-center p-2 text-gray-600 touch-target">
+                    <i class="fas fa-cog text-xl"></i>
+                    <span class="text-xs mt-1" data-translate="settings">الإعدادات</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="pb-20 pt-4">
+            <!-- Dashboard Page -->
+            <div id="dashboardPage" class="page p-4">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2 rtl:text-right ltr:text-left" data-translate="dashboard">لوحة التحكم</h2>
+                    <p class="text-gray-600 rtl:text-right ltr:text-left" data-translate="dashboard_description">نظرة عامة على حالات الفسيولوجيا العصبية</p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600 rtl:ml-3 ltr:mr-3">
+                                <i class="fas fa-calendar-day text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600" data-translate="today">اليوم</p>
+                                <p id="todayCount" class="text-xl font-bold text-gray-800">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100 text-green-600 rtl:ml-3 ltr:mr-3">
+                                <i class="fas fa-calendar-week text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600" data-translate="this_week">هذا الأسبوع</p>
+                                <p id="weekCount" class="text-xl font-bold text-gray-800">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600 rtl:ml-3 ltr:mr-3">
+                                <i class="fas fa-calendar-alt text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600" data-translate="this_month">هذا الشهر</p>
+                                <p id="monthCount" class="text-xl font-bold text-gray-800">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100 text-purple-600 rtl:ml-3 ltr:mr-3">
+                                <i class="fas fa-chart-line text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600" data-translate="total_cases">إجمالي الحالات</p>
+                                <p id="totalCount" class="text-xl font-bold text-gray-800">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="space-y-6">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4 rtl:text-right ltr:text-left" data-translate="cases_by_exam_type">الحالات حسب نوع الفحص</h3>
+                        <canvas id="examTypeChart" class="max-h-64"></canvas>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4 rtl:text-right ltr:text-left" data-translate="cases_by_branch">الحالات حسب الفرع</h3>
+                        <canvas id="branchChart" class="max-h-64"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Case Page -->
+            <div id="addCasePage" class="page p-4 hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2 rtl:text-right ltr:text-left" data-translate="add_new_case">إضافة حالة جديدة</h2>
+                    <p class="text-gray-600 rtl:text-right ltr:text-left" data-translate="enter_patient_details">أدخل تفاصيل فحص المريض</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-4">
+                    <form id="caseForm" onsubmit="saveCase(event)">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="patient_id_label">رقم المريض / رقم الحالة *</label>
+                                <input type="text" id="patientId" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 rtl:text-right ltr:text-left" data-translate-placeholder="patient_id_placeholder">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="patient_name_label">اسم المريض</label>
+                                <input type="text" id="patientName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 rtl:text-right ltr:text-left" data-translate-placeholder="patient_name_placeholder">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="exam_date_label">تاريخ الفحص *</label>
+                                <input type="date" id="examDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="doctor_name_label">اسم الطبيب *</label>
+                                <select id="doctorName" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 rtl:text-right ltr:text-left">
+                                    <option value="" data-translate="select_doctor">اختر الطبيب</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="location_label">الموقع/الفرع *</label>
+                                <select id="location" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 rtl:text-right ltr:text-left">
+                                    <option value="" data-translate="select_branch">اختر الفرع</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="exam_type_label">نوع الفحص *</label>
+                                <select id="examType" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 rtl:text-right ltr:text-left">
+                                    <option value="" data-translate="select_exam_type">اختر النوع</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="notes_label">ملاحظات/تعليقات</label>
+                                <textarea id="notes" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 rtl:text-right ltr:text-left" data-translate-placeholder="notes_placeholder"></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end space-x-3 space-x-reverse">
+                            <button type="button" onclick="resetForm()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 touch-target" data-translate="reset">
+                                إعادة تعيين
+                            </button>
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 touch-target" data-translate="save_case">
+                                حفظ الحالة
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Cases Page -->
+            <div id="casesPage" class="page p-4 hidden">
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-2 rtl:text-right ltr:text-left" data-translate="all_cases">جميع الحالات</h2>
+                            <p class="text-gray-600 rtl:text-right ltr:text-left" data-translate="manage_view_cases">إدارة ومشاهدة جميع حالات المرضى</p>
+                        </div>
+                        <button onclick="showPage('addCase')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg touch-target">
+                            <i class="fas fa-plus rtl:ml-2 ltr:mr-2"></i><span data-translate="add_case">إضافة حالة</span>
+                        </button>
+                    </div>
+
+                    <!-- Search and Filter -->
+                    <div class="bg-white rounded-lg shadow p-4 mb-4">
+                        <div class="space-y-3">
+                            <input type="text" id="searchCases" class="w-full px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left" data-translate-placeholder="search_cases">
+                            <div class="grid grid-cols-1 gap-3">
+                                <select id="filterDoctor" class="px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left">
+                                    <option value="" data-translate="all_doctors">جميع الأطباء</option>
+                                </select>
+                                <select id="filterBranch" class="px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left">
+                                    <option value="" data-translate="all_branches">جميع الفروع</option>
+                                </select>
+                                <select id="filterExamType" class="px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left">
+                                    <option value="" data-translate="all_types">جميع الأنواع</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cases List -->
+                <div id="casesList" class="space-y-3">
+                    <!-- Cases will be populated here -->
+                </div>
+            </div>
+
+            <!-- Reports Page -->
+            <div id="reportsPage" class="page p-4 hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2 rtl:text-right ltr:text-left" data-translate="reports">التقارير</h2>
+                    <p class="text-gray-600 rtl:text-right ltr:text-left" data-translate="generate_export_reports">إنشاء وتصدير التقارير التفصيلية</p>
+                </div>
+
+                <!-- Report Filters -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <h3 class="text-lg font-semibold mb-4 rtl:text-right ltr:text-left" data-translate="report_filters">مرشحات التقرير</h3>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="from_date">من تاريخ</label>
+                                <input type="date" id="reportFromDate" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="to_date">إلى تاريخ</label>
+                                <input type="date" id="reportToDate" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="doctors">الأطباء</label>
+                            <select id="reportDoctors" multiple class="w-full px-3 py-2 border border-gray-300 rounded-md h-32 rtl:text-right ltr:text-left">
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="branches">الفروع</label>
+                            <select id="reportBranches" multiple class="w-full px-3 py-2 border border-gray-300 rounded-md h-32 rtl:text-right ltr:text-left">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <button onclick="generateReport()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg touch-target" data-translate="generate_report">
+                            إنشاء التقرير
+                        </button>
+                        <button onclick="exportPDF()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg touch-target" data-translate="export_pdf">
+                            تصدير PDF
+                        </button>
+                        <button onclick="exportExcel()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg touch-target" data-translate="export_excel">
+                            تصدير Excel
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Report Results -->
+                <div id="reportResults" class="bg-white rounded-lg shadow p-4 hidden">
+                    <h3 class="text-lg font-semibold mb-4 rtl:text-right ltr:text-left" data-translate="report_results">نتائج التقرير</h3>
+                    <div id="reportContent"></div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settingsPage" class="page p-4 hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2 rtl:text-right ltr:text-left" data-translate="settings">الإعدادات</h2>
+                    <p class="text-gray-600 rtl:text-right ltr:text-left" data-translate="manage_doctors_branches">إدارة الأطباء والفروع وأنواع الفحوصات</p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Doctors Management -->
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <h3 class="text-lg font-semibold mb-4 rtl:text-right ltr:text-left" data-translate="doctors">الأطباء</h3>
+                        <div class="mb-4">
+                            <input type="text" id="newDoctor" class="w-full px-3 py-2 border border-gray-300 rounded-md mb-2 rtl:text-right ltr:text-left" data-translate-placeholder="add_new_doctor">
+                            <button onclick="addDoctor()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md touch-target" data-translate="add_doctor">
+                                إضافة طبيب
+                            </button>
+                        </div>
+                        <ul id="doctorsList" class="space-y-2"></ul>
+                    </div>
+
+                    <!-- Branches Management -->
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <h3 class="text-lg font-semibold mb-4 rtl:text-right ltr:text-left" data-translate="branches">الفروع</h3>
+                        <div class="mb-4">
+                            <input type="text" id="newBranch" class="w-full px-3 py-2 border border-gray-300 rounded-md mb-2 rtl:text-right ltr:text-left" data-translate-placeholder="add_new_branch">
+                            <button onclick="addBranch()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md touch-target" data-translate="add_branch">
+                                إضافة فرع
+                            </button>
+                        </div>
+                        <ul id="branchesList" class="space-y-2"></ul>
+                    </div>
+
+                    <!-- Examination Types Management -->
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <h3 class="text-lg font-semibold mb-4 rtl:text-right ltr:text-left" data-translate="exam_types">أنواع الفحوصات</h3>
+                        <div class="mb-4">
+                            <input type="text" id="newExamType" class="w-full px-3 py-2 border border-gray-300 rounded-md mb-2 rtl:text-right ltr:text-left" data-translate-placeholder="add_new_exam_type">
+                            <button onclick="addExamType()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md touch-target" data-translate="add_exam_type">
+                                إضافة نوع
+                            </button>
+                        </div>
+                        <ul id="examTypesList" class="space-y-2"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Case Modal -->
+    <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-lg p-4 w-full max-w-md max-h-screen overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold rtl:text-right ltr:text-left" data-translate="edit_case">تعديل الحالة</h3>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600 touch-target">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editCaseForm" onsubmit="updateCase(event)">
+                <input type="hidden" id="editCaseId">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="patient_id_label">رقم المريض / رقم الحالة *</label>
+                        <input type="text" id="editPatientId" required class="w-full px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="patient_name_label">اسم المريض</label>
+                        <input type="text" id="editPatientName" class="w-full px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="exam_date_label">تاريخ الفحص *</label>
+                        <input type="date" id="editExamDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="doctor_name_label">اسم الطبيب *</label>
+                        <select id="editDoctorName" required class="w-full px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left">
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="location_label">الموقع/الفرع *</label>
+                        <select id="editLocation" required class="w-full px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left">
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="exam_type_label">نوع الفحص *</label>
+                        <select id="editExamType" required class="w-full px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left">
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 rtl:text-right ltr:text-left" data-translate="notes_label">ملاحظات/تعليقات</label>
+                        <textarea id="editNotes" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md rtl:text-right ltr:text-left"></textarea>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3 space-x-reverse">
+                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 touch-target" data-translate="cancel">
+                        إلغاء
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 touch-target" data-translate="update_case">
+                        تحديث الحالة
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Translations
+        const translations = {
+            ar: {
+                app_title: "متتبع الفسيولوجيا العصبية - زيدان",
+                offline_message: "أنت غير متصل بالإنترنت - يعمل التطبيق في وضع عدم الاتصال",
+                install_app: "تثبيت التطبيق",
+                install_description: "أضف التطبيق إلى الشاشة الرئيسية للوصول السريع",
+                install: "تثبيت",
+                dashboard: "لوحة التحكم",
+                add_case: "إضافة حالة",
+                cases: "الحالات",
+                reports: "التقارير",
+                settings: "الإعدادات",
+                dashboard_description: "نظرة عامة على حالات الفسيولوجيا العصبية",
+                today: "اليوم",
+                this_week: "هذا الأسبوع",
+                this_month: "هذا الشهر",
+                total_cases: "إجمالي الحالات",
+                cases_by_exam_type: "الحالات حسب نوع الفحص",
+                cases_by_branch: "الحالات حسب الفرع",
+                add_new_case: "إضافة حالة جديدة",
+                enter_patient_details: "أدخل تفاصيل فحص المريض",
+                patient_id_label: "رقم المريض / رقم الحالة *",
+                patient_id_placeholder: "أدخل رقم المريض",
+                patient_name_label: "اسم المريض",
+                patient_name_placeholder: "أدخل اسم المريض",
+                exam_date_label: "تاريخ الفحص *",
+                doctor_name_label: "اسم الطبيب *",
+                select_doctor: "اختر الطبيب",
+                location_label: "الموقع/الفرع *",
+                select_branch: "اختر الفرع",
+                exam_type_label: "نوع الفحص *",
+                select_exam_type: "اختر النوع",
+                notes_label: "ملاحظات/تعليقات",
+                notes_placeholder: "أدخل الملاحظات",
+                reset: "إعادة تعيين",
+                save_case: "حفظ الحالة",
+                all_cases: "جميع الحالات",
+                manage_view_cases: "إدارة ومشاهدة جميع حالات المرضى",
+                search_cases: "البحث في الحالات...",
+                all_doctors: "جميع الأطباء",
+                all_branches: "جميع الفروع",
+                all_types: "جميع الأنواع",
+                generate_export_reports: "إنشاء وتصدير التقارير التفصيلية",
+                report_filters: "مرشحات التقرير",
+                from_date: "من تاريخ",
+                to_date: "إلى تاريخ",
+                doctors: "الأطباء",
+                branches: "الفروع",
+                generate_report: "إنشاء التقرير",
+                export_pdf: "تصدير PDF",
+                export_excel: "تصدير Excel",
+                report_results: "نتائج التقرير",
+                manage_doctors_branches: "إدارة الأطباء والفروع وأنواع الفحوصات",
+                add_new_doctor: "إضافة طبيب جديد",
+                add_doctor: "إضافة طبيب",
+                add_new_branch: "إضافة فرع جديد",
+                add_branch: "إضافة فرع",
+                exam_types: "أنواع الفحوصات",
+                add_new_exam_type: "إضافة نوع فحص جديد",
+                add_exam_type: "إضافة نوع",
+                edit_case: "تعديل الحالة",
+                cancel: "إلغاء",
+                update_case: "تحديث الحالة",
+                case_saved_success: "تم حفظ الحالة بنجاح!",
+                case_updated_success: "تم تحديث الحالة بنجاح!",
+                case_deleted_success: "تم حذف الحالة بنجاح!",
+                doctor_added_success: "تم إضافة الطبيب بنجاح!",
+                branch_added_success: "تم إضافة الفرع بنجاح!",
+                exam_type_added_success: "تم إضافة نوع الفحص بنجاح!",
+                item_deleted_success: "تم حذف العنصر بنجاح!",
+                pdf_exported_success: "تم تصدير PDF بنجاح!",
+                excel_exported_success: "تم تصدير ملف Excel بنجاح!",
+                confirm_delete_case: "هل أنت متأكد من حذف هذه الحالة؟",
+                confirm_delete_item: "هل أنت متأكد من حذف \"{item}\"؟",
+                not_specified: "غير محدد",
+                date: "التاريخ",
+                doctor: "الطبيب",
+                branch: "الفرع",
+                type: "النوع"
+            },
+            en: {
+                app_title: "Zidan's Neurophysiology Tracker",
+                offline_message: "You are offline - App works in offline mode",
+                install_app: "Install App",
+                install_description: "Add the app to your home screen for quick access",
+                install: "Install",
+                dashboard: "Dashboard",
+                add_case: "Add Case",
+                cases: "Cases",
+                reports: "Reports",
+                settings: "Settings",
+                dashboard_description: "Overview of neurophysiology cases",
+                today: "Today",
+                this_week: "This Week",
+                this_month: "This Month",
+                total_cases: "Total Cases",
+                cases_by_exam_type: "Cases by Exam Type",
+                cases_by_branch: "Cases by Branch",
+                add_new_case: "Add New Case",
+                enter_patient_details: "Enter patient examination details",
+                patient_id_label: "Patient ID / Case Number *",
+                patient_id_placeholder: "Enter patient ID",
+                patient_name_label: "Patient Name",
+                patient_name_placeholder: "Enter patient name",
+                exam_date_label: "Examination Date *",
+                doctor_name_label: "Doctor Name *",
+                select_doctor: "Select Doctor",
+                location_label: "Location/Branch *",
+                select_branch: "Select Branch",
+                exam_type_label: "Examination Type *",
+                select_exam_type: "Select Type",
+                notes_label: "Notes/Comments",
+                notes_placeholder: "Enter notes",
+                reset: "Reset",
+                save_case: "Save Case",
+                all_cases: "All Cases",
+                manage_view_cases: "Manage and view all patient cases",
+                search_cases: "Search cases...",
+                all_doctors: "All Doctors",
+                all_branches: "All Branches",
+                all_types: "All Types",
+                generate_export_reports: "Generate and export detailed reports",
+                report_filters: "Report Filters",
+                from_date: "From Date",
+                to_date: "To Date",
+                doctors: "Doctors",
+                branches: "Branches",
+                generate_report: "Generate Report",
+                export_pdf: "Export PDF",
+                export_excel: "Export Excel",
+                report_results: "Report Results",
+                manage_doctors_branches: "Manage doctors, branches and examination types",
+                add_new_doctor: "Add new doctor",
+                add_doctor: "Add Doctor",
+                add_new_branch: "Add new branch",
+                add_branch: "Add Branch",
+                exam_types: "Examination Types",
+                add_new_exam_type: "Add new examination type",
+                add_exam_type: "Add Type",
+                edit_case: "Edit Case",
+                cancel: "Cancel",
+                update_case: "Update Case",
+                case_saved_success: "Case saved successfully!",
+                case_updated_success: "Case updated successfully!",
+                case_deleted_success: "Case deleted successfully!",
+                doctor_added_success: "Doctor added successfully!",
+                branch_added_success: "Branch added successfully!",
+                exam_type_added_success: "Examination type added successfully!",
+                item_deleted_success: "Item deleted successfully!",
+                pdf_exported_success: "PDF exported successfully!",
+                excel_exported_success: "Excel file exported successfully!",
+                confirm_delete_case: "Are you sure you want to delete this case?",
+                confirm_delete_item: "Are you sure you want to delete \"{item}\"?",
+                not_specified: "Not specified",
+                date: "Date",
+                doctor: "Doctor",
+                branch: "Branch",
+                type: "Type"
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'ar';
+
+        // PWA and Service Worker Registration
+        let deferredPrompt;
+        let isOnline = navigator.onLine;
+        
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js');
+                    console.log('SW registered: ', registration);
+                } catch (registrationError) {
+                    console.log('SW registration failed: ', registrationError);
+                }
+            });
+        }
+
+        // Install Prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallPrompt();
+        });
+
+        function showInstallPrompt() {
+            const installPrompt = document.getElementById('installPrompt');
+            installPrompt.classList.add('show');
+        }
+
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+                hideInstallPrompt();
+            }
+        });
+
+        document.getElementById('dismissInstall').addEventListener('click', () => {
+            hideInstallPrompt();
+        });
+
+        function hideInstallPrompt() {
+            const installPrompt = document.getElementById('installPrompt');
+            installPrompt.classList.remove('show');
+        }
+
+        // Language Functions
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update HTML attributes
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update title
+            document.title = translations[lang].app_title;
+            
+            // Update all translatable elements
+            updateTranslations();
+            
+            // Update language switcher
+            updateLanguageSwitcher();
+            
+            // Hide dropdown
+            document.getElementById('langDropdown').classList.remove('show');
+        }
+
+        function updateTranslations() {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLanguage][key]) {
+                    element.textContent = translations[currentLanguage][key];
+                }
+            });
+            
+            // Update placeholders
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[currentLanguage][key]) {
+                    element.placeholder = translations[currentLanguage][key];
+                }
+            });
+        }
+
+        function updateLanguageSwitcher() {
+            const currentLangElement = document.getElementById('currentLang');
+            const checkAr = document.getElementById('check-ar');
+            const checkEn = document.getElementById('check-en');
+            
+            if (currentLanguage === 'ar') {
+                currentLangElement.textContent = 'العربية';
+                checkAr.classList.remove('opacity-0');
+                checkEn.classList.add('opacity-0');
+            } else {
+                currentLangElement.textContent = 'English';
+                checkEn.classList.remove('opacity-0');
+                checkAr.classList.add('opacity-0');
+            }
+        }
+
+        // Language switcher event listeners
+        document.getElementById('langToggle').addEventListener('click', () => {
+            const dropdown = document.getElementById('langDropdown');
+            dropdown.classList.toggle('show');
+        });
+
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                const lang = e.currentTarget.getAttribute('data-lang');
+                switchLanguage(lang);
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const langSwitcher = document.querySelector('.lang-switcher');
+            if (!langSwitcher.contains(e.target)) {
+                document.getElementById('langDropdown').classList.remove('show');
+            }
+        });
+
+        // Online/Offline Detection
+        window.addEventListener('online', () => {
+            isOnline = true;
+            hideOfflineIndicator();
+            syncData();
+        });
+
+        window.addEventListener('offline', () => {
+            isOnline = false;
+            showOfflineIndicator();
+        });
+
+        function showOfflineIndicator() {
+            document.getElementById('offlineIndicator').classList.add('show');
+        }
+
+        function hideOfflineIndicator() {
+            document.getElementById('offlineIndicator').classList.remove('show');
+        }
+
+        // API Configuration
+        const API_BASE_URL = window.location.origin.includes('localhost') 
+            ? 'http://localhost:3000/api' 
+            : '/api';
+
+        // Application State - Start with empty arrays
+        let currentPage = 'dashboard';
+        let cases = [];
+        let doctors = []; // Empty array - no pre-filled doctors
+        let branches = []; // Empty array - no pre-filled branches
+        let examTypes = []; // Empty array - no pre-filled exam types
+        let editingCaseId = null;
+        let pendingSync = [];
+
+        // API Helper Functions
+        async function apiRequest(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                },
+                ...options
+            };
+
+            try {
+                const response = await fetch(url, config);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API request failed:', error);
+                if (!isOnline) {
+                    // Store for later sync
+                    if (options.method && options.method !== 'GET') {
+                        pendingSync.push({ endpoint, options });
+                        localStorage.setItem('pendingSync', JSON.stringify(pendingSync));
+                    }
+                    // Return cached data for GET requests
+                    return getCachedData(endpoint);
+                }
+                throw error;
+            }
+        }
+
+        function getCachedData(endpoint) {
+            const cached = localStorage.getItem(`cache_${endpoint}`);
+            return cached ? JSON.parse(cached) : [];
+        }
+
+        function setCachedData(endpoint, data) {
+            localStorage.setItem(`cache_${endpoint}`, JSON.stringify(data));
+        }
+
+        // Sync Functions
+        async function syncData() {
+            if (!isOnline) return;
+
+            showSyncSpinner();
+            
+            try {
+                // Sync pending operations
+                const pending = JSON.parse(localStorage.getItem('pendingSync') || '[]');
+                for (const operation of pending) {
+                    await apiRequest(operation.endpoint, operation.options);
+                }
+                localStorage.removeItem('pendingSync');
+                pendingSync = [];
+
+                // Refresh data
+                await loadAllData();
+                showSyncSuccess();
+            } catch (error) {
+                console.error('Sync failed:', error);
+                showSyncError();
+            }
+        }
+
+        function showSyncSpinner() {
+            document.getElementById('syncSpinner').classList.remove('hidden');
+            document.getElementById('syncSuccess').classList.add('hidden');
+            document.getElementById('syncError').classList.add('hidden');
+        }
+
+        function showSyncSuccess() {
+            document.getElementById('syncSpinner').classList.add('hidden');
+            document.getElementById('syncSuccess').classList.remove('hidden');
+            document.getElementById('syncError').classList.add('hidden');
+        }
+
+        function showSyncError() {
+            document.getElementById('syncSpinner').classList.add('hidden');
+            document.getElementById('syncSuccess').classList.add('hidden');
+            document.getElementById('syncError').classList.remove('hidden');
+        }
+
+        // Data Loading Functions
+        async function loadAllData() {
+            try {
+                const [casesData, doctorsData, branchesData, examTypesData] = await Promise.all([
+                    apiRequest('/cases'),
+                    apiRequest('/doctors'),
+                    apiRequest('/branches'),
+                    apiRequest('/exam-types')
+                ]);
+
+                cases = casesData;
+                doctors = doctorsData.map(d => d.name);
+                branches = branchesData.map(b => b.name);
+                examTypes = examTypesData.map(e => e.name);
+
+                // Cache data
+                setCachedData('/cases', cases);
+                setCachedData('/doctors', doctors);
+                setCachedData('/branches', branches);
+                setCachedData('/exam-types', examTypes);
+
+            } catch (error) {
+                console.error('Failed to load data:', error);
+                // Load from cache - will be empty arrays if no cache exists
+                cases = getCachedData('/cases');
+                doctors = getCachedData('/doctors');
+                branches = getCachedData('/branches');
+                examTypes = getCachedData('/exam-types');
+            }
+        }
+
+        // Initialize Application
+        async function initApp() {
+            // Set initial language
+            switchLanguage(currentLanguage);
+            
+            await loadAllData();
+            setupEventListeners();
+            setDefaultDate();
+            showPage('dashboard');
+            updateDashboard();
+            
+            // Check online status
+            if (!isOnline) {
+                showOfflineIndicator();
+            }
+        }
+
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            document.getElementById(pageName + 'Page').classList.remove('hidden');
+            document.getElementById(pageName + 'Page').classList.add('fade-in');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-600');
+            });
+            
+            currentPage = pageName;
+            
+            // Page-specific actions
+            switch(pageName) {
+                case 'dashboard':
+                    updateDashboard();
+                    break;
+                case 'addCase':
+                    populateDropdowns();
+                    break;
+                case 'cases':
+                    displayCases();
+                    populateFilters();
+                    break;
+                case 'reports':
+                    populateReportFilters();
+                    break;
+                case 'settings':
+                    displaySettings();
+                    break;
+            }
+        }
+
+        // Case Management
+        async function saveCase(event) {
+            event.preventDefault();
+            
+            const caseData = {
+                patient_id: document.getElementById('patientId').value,
+                patient_name: document.getElementById('patientName').value,
+                exam_date: document.getElementById('examDate').value,
+                doctor_name: document.getElementById('doctorName').value,
+                location: document.getElementById('location').value,
+                exam_type: document.getElementById('examType').value,
+                notes: document.getElementById('notes').value
+            };
+            
+            try {
+                const newCase = await apiRequest('/cases', {
+                    method: 'POST',
+                    body: JSON.stringify(caseData)
+                });
+                
+                cases.push(newCase);
+                setCachedData('/cases', cases);
+                resetForm();
+                showNotification(translations[currentLanguage].case_saved_success, 'success');
+                updateDashboard();
+            } catch (error) {
+                showNotification('Failed to save case', 'error');
+            }
+        }
+
+        async function updateCase(event) {
+            event.preventDefault();
+            
+            const caseData = {
+                patient_id: document.getElementById('editPatientId').value,
+                patient_name: document.getElementById('editPatientName').value,
+                exam_date: document.getElementById('editExamDate').value,
+                doctor_name: document.getElementById('editDoctorName').value,
+                location: document.getElementById('editLocation').value,
+                exam_type: document.getElementById('editExamType').value,
+                notes: document.getElementById('editNotes').value
+            };
+            
+            try {
+                const updatedCase = await apiRequest(`/cases/${editingCaseId}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(caseData)
+                });
+                
+                const caseIndex = cases.findIndex(c => c.id == editingCaseId);
+                if (caseIndex !== -1) {
+                    cases[caseIndex] = updatedCase;
+                    setCachedData('/cases', cases);
+                }
+                
+                closeEditModal();
+                displayCases();
+                updateDashboard();
+                showNotification(translations[currentLanguage].case_updated_success, 'success');
+            } catch (error) {
+                showNotification('Failed to update case', 'error');
+            }
+        }
+
+        async function deleteCase(caseId) {
+            if (confirm(translations[currentLanguage].confirm_delete_case)) {
+                try {
+                    await apiRequest(`/cases/${caseId}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    cases = cases.filter(c => c.id != caseId);
+                    setCachedData('/cases', cases);
+                    displayCases();
+                    updateDashboard();
+                    showNotification(translations[currentLanguage].case_deleted_success, 'success');
+                } catch (error) {
+                    showNotification('Failed to delete case', 'error');
+                }
+            }
+        }
+
+        function editCase(caseId) {
+            const caseData = cases.find(c => c.id == caseId);
+            if (!caseData) return;
+            
+            editingCaseId = caseId;
+            
+            // Populate edit form
+            document.getElementById('editCaseId').value = caseData.id;
+            document.getElementById('editPatientId').value = caseData.patient_id;
+            document.getElementById('editPatientName').value = caseData.patient_name || '';
+            document.getElementById('editExamDate').value = caseData.exam_date;
+            document.getElementById('editNotes').value = caseData.notes || '';
+            
+            // Populate dropdowns
+            populateEditDropdowns();
+            
+            // Set selected values
+            setTimeout(() => {
+                document.getElementById('editDoctorName').value = caseData.doctor_name;
+                document.getElementById('editLocation').value = caseData.location;
+                document.getElementById('editExamType').value = caseData.exam_type;
+            }, 100);
+            
+            // Show modal
+            document.getElementById('editModal').classList.remove('hidden');
+            document.getElementById('editModal').classList.add('flex');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.add('hidden');
+            document.getElementById('editModal').classList.remove('flex');
+            editingCaseId = null;
+        }
+
+        function resetForm() {
+            document.getElementById('caseForm').reset();
+            setDefaultDate();
+        }
+
+        function setDefaultDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('examDate').value = today;
+        }
+
+        // Display Functions
+        function displayCases() {
+            const container = document.getElementById('casesList');
+            const searchTerm = document.getElementById('searchCases').value.toLowerCase();
+            const filterDoctor = document.getElementById('filterDoctor').value;
+            const filterBranch = document.getElementById('filterBranch').value;
+            const filterExamType = document.getElementById('filterExamType').value;
+            
+            let filteredCases = cases.filter(caseData => {
+                const matchesSearch = !searchTerm || 
+                    caseData.patient_id.toLowerCase().includes(searchTerm) ||
+                    (caseData.patient_name && caseData.patient_name.toLowerCase().includes(searchTerm));
+                const matchesDoctor = !filterDoctor || caseData.doctor_name === filterDoctor;
+                const matchesBranch = !filterBranch || caseData.location === filterBranch;
+                const matchesExamType = !filterExamType || caseData.exam_type === filterExamType;
+                
+                return matchesSearch && matchesDoctor && matchesBranch && matchesExamType;
+            });
+            
+            container.innerHTML = filteredCases.map(caseData => `
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg rtl:text-right ltr:text-left">${caseData.patient_id}</h3>
+                            <p class="text-gray-600 rtl:text-right ltr:text-left">${caseData.patient_name || translations[currentLanguage].not_specified}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="editCase('${caseData.id}')" class="text-blue-600 hover:text-blue-900 p-2 touch-target">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteCase('${caseData.id}')" class="text-red-600 hover:text-red-900 p-2 touch-target">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm">
+                        <div class="rtl:text-right ltr:text-left">
+                            <span class="text-gray-500">${translations[currentLanguage].date}:</span>
+                            <span class="font-medium">${new Date(caseData.exam_date).toLocaleDateString(currentLanguage === 'ar' ? 'ar-SA' : 'en-US')}</span>
+                        </div>
+                        <div class="rtl:text-right ltr:text-left">
+                            <span class="text-gray-500">${translations[currentLanguage].doctor}:</span>
+                            <span class="font-medium">${caseData.doctor_name}</span>
+                        </div>
+                        <div class="rtl:text-right ltr:text-left">
+                            <span class="text-gray-500">${translations[currentLanguage].branch}:</span>
+                            <span class="font-medium">${caseData.location}</span>
+                        </div>
+                        <div class="rtl:text-right ltr:text-left">
+                            <span class="text-gray-500">${translations[currentLanguage].type}:</span>
+                            <span class="font-medium">${caseData.exam_type}</span>
+                        </div>
+                    </div>
+                    ${caseData.notes ? `<div class="mt-2 text-sm text-gray-600 rtl:text-right ltr:text-left">${caseData.notes}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function populateDropdowns() {
+            populateSelect('doctorName', doctors);
+            populateSelect('location', branches);
+            populateSelect('examType', examTypes);
+        }
+
+        function populateEditDropdowns() {
+            populateSelect('editDoctorName', doctors);
+            populateSelect('editLocation', branches);
+            populateSelect('editExamType', examTypes);
+        }
+
+        function populateFilters() {
+            populateSelect('filterDoctor', doctors, true);
+            populateSelect('filterBranch', branches, true);
+            populateSelect('filterExamType', examTypes, true);
+        }
+
+        function populateReportFilters() {
+            populateMultiSelect('reportDoctors', doctors);
+            populateMultiSelect('reportBranches', branches);
+        }
+
+        function populateSelect(elementId, options, includeAll = false) {
+            const select = document.getElementById(elementId);
+            const currentValue = select.value;
+            
+            // Clear existing options except the first one (placeholder)
+            const firstOption = select.firstElementChild;
+            select.innerHTML = '';
+            if (firstOption) {
+                select.appendChild(firstOption);
+            }
+            
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                select.appendChild(optionElement);
+            });
+            
+            if (currentValue) {
+                select.value = currentValue;
+            }
+        }
+
+        function populateMultiSelect(elementId, options) {
+            const select = document.getElementById(elementId);
+            select.innerHTML = '';
+            
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                select.appendChild(optionElement);
+            });
+        }
+
+        // Dashboard Functions
+        function updateDashboard() {
+            updateCounters();
+            updateCharts();
+        }
+
+        function updateCounters() {
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay());
+            
+            const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            
+            const todayCount = cases.filter(c => c.exam_date === todayStr).length;
+            const weekCount = cases.filter(c => new Date(c.exam_date) >= startOfWeek).length;
+            const monthCount = cases.filter(c => new Date(c.exam_date) >= startOfMonth).length;
+            const totalCount = cases.length;
+            
+            document.getElementById('todayCount').textContent = todayCount;
+            document.getElementById('weekCount').textContent = weekCount;
+            document.getElementById('monthCount').textContent = monthCount;
+            document.getElementById('totalCount').textContent = totalCount;
+        }
+
+        function updateCharts() {
+            updateExamTypeChart();
+            updateBranchChart();
+        }
+
+        function updateExamTypeChart() {
+            const ctx = document.getElementById('examTypeChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (window.examTypeChartInstance) {
+                window.examTypeChartInstance.destroy();
+            }
+            
+            const examTypeCounts = {};
+            examTypes.forEach(type => {
+                examTypeCounts[type] = cases.filter(c => c.exam_type === type).length;
+            });
+            
+            window.examTypeChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(examTypeCounts),
+                    datasets: [{
+                        data: Object.values(examTypeCounts),
+                        backgroundColor: [
+                            '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateBranchChart() {
+            const ctx = document.getElementById('branchChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (window.branchChartInstance) {
+                window.branchChartInstance.destroy();
+            }
+            
+            const branchCounts = {};
+            branches.forEach(branch => {
+                branchCounts[branch] = cases.filter(c => c.location === branch).length;
+            });
+            
+            window.branchChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(branchCounts),
+                    datasets: [{
+                        label: translations[currentLanguage].cases,
+                        data: Object.values(branchCounts),
+                        backgroundColor: '#3B82F6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Settings Functions
+        function displaySettings() {
+            displayList('doctorsList', doctors, 'doctor');
+            displayList('branchesList', branches, 'branch');
+            displayList('examTypesList', examTypes, 'examType');
+        }
+
+        function displayList(elementId, items, type) {
+            const list = document.getElementById(elementId);
+            list.innerHTML = items.map(item => `
+                <li class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                    <span class="rtl:text-right ltr:text-left">${item}</span>
+                    <button onclick="removeItem('${type}', '${item}')" class="text-red-600 hover:text-red-800 p-2 touch-target">
+                        <i class="fas fa-trash text-sm"></i>
+                    </button>
+                </li>
+            `).join('');
+        }
+
+        async function addDoctor() {
+            const input = document.getElementById('newDoctor');
+            const doctor = input.value.trim();
+            if (doctor && !doctors.includes(doctor)) {
+                try {
+                    await apiRequest('/doctors', {
+                        method: 'POST',
+                        body: JSON.stringify({ name: doctor })
+                    });
+                    
+                    doctors.push(doctor);
+                    setCachedData('/doctors', doctors);
+                    input.value = '';
+                    displaySettings();
+                    populateDropdowns();
+                    populateEditDropdowns();
+                    populateFilters();
+                    populateReportFilters();
+                    showNotification(translations[currentLanguage].doctor_added_success, 'success');
+                } catch (error) {
+                    showNotification('Failed to add doctor', 'error');
+                }
+            }
+        }
+
+        async function addBranch() {
+            const input = document.getElementById('newBranch');
+            const branch = input.value.trim();
+            if (branch && !branches.includes(branch)) {
+                try {
+                    await apiRequest('/branches', {
+                        method: 'POST',
+                        body: JSON.stringify({ name: branch })
+                    });
+                    
+                    branches.push(branch);
+                    setCachedData('/branches', branches);
+                    input.value = '';
+                    displaySettings();
+                    populateDropdowns();
+                    populateEditDropdowns();
+                    populateFilters();
+                    populateReportFilters();
+                    showNotification(translations[currentLanguage].branch_added_success, 'success');
+                } catch (error) {
+                    showNotification('Failed to add branch', 'error');
+                }
+            }
+        }
+
+        async function addExamType() {
+            const input = document.getElementById('newExamType');
+            const examType = input.value.trim();
+            if (examType && !examTypes.includes(examType)) {
+                try {
+                    await apiRequest('/exam-types', {
+                        method: 'POST',
+                        body: JSON.stringify({ name: examType })
+                    });
+                    
+                    examTypes.push(examType);
+                    setCachedData('/exam-types', examTypes);
+                    input.value = '';
+                    displaySettings();
+                    populateDropdowns();
+                    populateEditDropdowns();
+                    populateFilters();
+                    showNotification(translations[currentLanguage].exam_type_added_success, 'success');
+                } catch (error) {
+                    showNotification('Failed to add examination type', 'error');
+                }
+            }
+        }
+
+        async function removeItem(type, item) {
+            const confirmMessage = translations[currentLanguage].confirm_delete_item.replace('{item}', item);
+            if (confirm(confirmMessage)) {
+                try {
+                    let endpoint, array;
+                    switch(type) {
+                        case 'doctor':
+                            endpoint = '/doctors';
+                            array = doctors;
+                            break;
+                        case 'branch':
+                            endpoint = '/branches';
+                            array = branches;
+                            break;
+                        case 'examType':
+                            endpoint = '/exam-types';
+                            array = examTypes;
+                            break;
+                    }
+                    
+                    // Find the item ID (this is a simplified approach)
+                    const itemIndex = array.indexOf(item);
+                    if (itemIndex !== -1) {
+                        await apiRequest(`${endpoint}/${itemIndex + 1}`, {
+                            method: 'DELETE'
+                        });
+                        
+                        array.splice(itemIndex, 1);
+                        setCachedData(endpoint, array);
+                        displaySettings();
+                        populateDropdowns();
+                        populateEditDropdowns();
+                        populateFilters();
+                        populateReportFilters();
+                        showNotification(translations[currentLanguage].item_deleted_success, 'success');
+                    }
+                } catch (error) {
+                    showNotification('Failed to delete item', 'error');
+                }
+            }
+        }
+
+        // Reports Functions
+        function generateReport() {
+            const fromDate = document.getElementById('reportFromDate').value;
+            const toDate = document.getElementById('reportToDate').value;
+            const selectedDoctors = Array.from(document.getElementById('reportDoctors').selectedOptions).map(o => o.value);
+            const selectedBranches = Array.from(document.getElementById('reportBranches').selectedOptions).map(o => o.value);
+            
+            let filteredCases = cases;
+            
+            // Filter by date range
+            if (fromDate) {
+                filteredCases = filteredCases.filter(c => c.exam_date >= fromDate);
+            }
+            if (toDate) {
+                filteredCases = filteredCases.filter(c => c.exam_date <= toDate);
+            }
+            
+            // Filter by doctors
+            if (selectedDoctors.length > 0) {
+                filteredCases = filteredCases.filter(c => selectedDoctors.includes(c.doctor_name));
+            }
+            
+            // Filter by branches
+            if (selectedBranches.length > 0) {
+                filteredCases = filteredCases.filter(c => selectedBranches.includes(c.location));
+            }
+            
+            // Generate report content
+            const reportContent = generateReportContent(filteredCases, fromDate, toDate, selectedDoctors, selectedBranches);
+            
+            document.getElementById('reportContent').innerHTML = reportContent;
+            document.getElementById('reportResults').classList.remove('hidden');
+        }
+
+        function generateReportContent(filteredCases, fromDate, toDate, selectedDoctors, selectedBranches) {
+            const totalCases = filteredCases.length;
+            const t = translations[currentLanguage];
+            
+            // Group by doctor
+            const doctorStats = {};
+            doctors.forEach(doctor => {
+                doctorStats[doctor] = filteredCases.filter(c => c.doctor_name === doctor).length;
+            });
+            
+            // Group by branch
+            const branchStats = {};
+            branches.forEach(branch => {
+                branchStats[branch] = filteredCases.filter(c => c.location === branch).length;
+            });
+            
+            // Group by exam type
+            const examTypeStats = {};
+            examTypes.forEach(type => {
+                examTypeStats[type] = filteredCases.filter(c => c.exam_type === type).length;
+            });
+            
+            return `
+                <div class="space-y-6">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-lg mb-2 rtl:text-right ltr:text-left">Report Summary</h4>
+                        <p class="rtl:text-right ltr:text-left"><strong>Time Range:</strong> ${fromDate || 'All'} to ${toDate || 'All'}</p>
+                        <p class="rtl:text-right ltr:text-left"><strong>Total Cases:</strong> ${totalCases}</p>
+                        <p class="rtl:text-right ltr:text-left"><strong>Doctors:</strong> ${selectedDoctors.length > 0 ? selectedDoctors.join(', ') : 'All'}</p>
+                        <p class="rtl:text-right ltr:text-left"><strong>Branches:</strong> ${selectedBranches.length > 0 ? selectedBranches.join(', ') : 'All'}</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-white border rounded-lg p-4">
+                            <h5 class="font-semibold mb-3 rtl:text-right ltr:text-left">Cases by Doctor</h5>
+                            ${Object.entries(doctorStats).map(([doctor, count]) => 
+                                `<div class="flex justify-between py-1">
+                                    <span class="rtl:text-right ltr:text-left">${doctor}</span>
+                                    <span class="font-medium">${count}</span>
+                                </div>`
+                            ).join('')}
+                        </div>
+                        
+                        <div class="bg-white border rounded-lg p-4">
+                            <h5 class="font-semibold mb-3 rtl:text-right ltr:text-left">Cases by Branch</h5>
+                            ${Object.entries(branchStats).map(([branch, count]) => 
+                                `<div class="flex justify-between py-1">
+                                    <span class="rtl:text-right ltr:text-left">${branch}</span>
+                                    <span class="font-medium">${count}</span>
+                                </div>`
+                            ).join('')}
+                        </div>
+                        
+                        <div class="bg-white border rounded-lg p-4">
+                            <h5 class="font-semibold mb-3 rtl:text-right ltr:text-left">Cases by Examination Type</h5>
+                            ${Object.entries(examTypeStats).map(([type, count]) => 
+                                `<div class="flex justify-between py-1">
+                                    <span class="rtl:text-right ltr:text-left">${type}</span>
+                                    <span class="font-medium">${count}</span>
+                                </div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function exportPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add title
+            doc.setFontSize(20);
+            doc.text('Neurophysiology Cases Report', 20, 20);
+            
+            // Add date
+            doc.setFontSize(12);
+            doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 35);
+            
+            // Add report content (simplified for PDF)
+            const fromDate = document.getElementById('reportFromDate').value;
+            const toDate = document.getElementById('reportToDate').value;
+            const selectedDoctors = Array.from(document.getElementById('reportDoctors').selectedOptions).map(o => o.value);
+            const selectedBranches = Array.from(document.getElementById('reportBranches').selectedOptions).map(o => o.value);
+            
+            let filteredCases = cases;
+            
+            if (fromDate) filteredCases = filteredCases.filter(c => c.exam_date >= fromDate);
+            if (toDate) filteredCases = filteredCases.filter(c => c.exam_date <= toDate);
+            if (selectedDoctors.length > 0) filteredCases = filteredCases.filter(c => selectedDoctors.includes(c.doctor_name));
+            if (selectedBranches.length > 0) filteredCases = filteredCases.filter(c => selectedBranches.includes(c.location));
+            
+            doc.text(`Total Cases: ${filteredCases.length}`, 20, 50);
+            doc.text(`Date Range: ${fromDate || 'All'} to ${toDate || 'All'}`, 20, 65);
+            
+            // Add cases list (simplified)
+            let yPosition = 80;
+            doc.text('Cases List:', 20, yPosition);
+            yPosition += 15;
+            
+            filteredCases.slice(0, 20).forEach((caseData, index) => {
+                if (yPosition > 250) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                doc.text(`${index + 1}. ${caseData.patient_id} - ${caseData.doctor_name} - ${caseData.exam_type}`, 20, yPosition);
+                yPosition += 10;
+            });
+            
+            doc.save('neurophysiology-report.pdf');
+            showNotification(translations[currentLanguage].pdf_exported_success, 'success');
+        }
+
+        function exportExcel() {
+            const fromDate = document.getElementById('reportFromDate').value;
+            const toDate = document.getElementById('reportToDate').value;
+            const selectedDoctors = Array.from(document.getElementById('reportDoctors').selectedOptions).map(o => o.value);
+            const selectedBranches = Array.from(document.getElementById('reportBranches').selectedOptions).map(o => o.value);
+            
+            let filteredCases = cases;
+            
+            if (fromDate) filteredCases = filteredCases.filter(c => c.exam_date >= fromDate);
+            if (toDate) filteredCases = filteredCases.filter(c => c.exam_date <= toDate);
+            if (selectedDoctors.length > 0) filteredCases = filteredCases.filter(c => selectedDoctors.includes(c.doctor_name));
+            if (selectedBranches.length > 0) filteredCases = filteredCases.filter(c => selectedBranches.includes(c.location));
+            
+            // Create CSV content
+            const t = translations[currentLanguage];
+            const headers = ['Patient ID', 'Patient Name', 'Exam Date', 'Doctor Name', 'Branch', 'Exam Type', 'Notes'];
+            const csvContent = [
+                headers.join(','),
+                ...filteredCases.map(caseData => [
+                    caseData.patient_id,
+                    caseData.patient_name || '',
+                    caseData.exam_date,
+                    caseData.doctor_name,
+                    caseData.location,
+                    caseData.exam_type,
+                    (caseData.notes || '').replace(/,/g, ';')
+                ].join(','))
+            ].join('\n');
+            
+            // Download CSV
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'neurophysiology-report.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            showNotification(translations[currentLanguage].excel_exported_success, 'success');
+        }
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Search and filter events
+            document.getElementById('searchCases').addEventListener('input', displayCases);
+            document.getElementById('filterDoctor').addEventListener('change', displayCases);
+            document.getElementById('filterBranch').addEventListener('change', displayCases);
+            document.getElementById('filterExamType').addEventListener('change', displayCases);
+            
+            // Sync button
+            document.getElementById('syncBtn').addEventListener('click', syncData);
+            
+            // Enter key events for adding items
+            document.getElementById('newDoctor').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addDoctor();
+            });
+            document.getElementById('newBranch').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addBranch();
+            });
+            document.getElementById('newExamType').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addExamType();
+            });
+        }
+
+        // Utility Functions
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-20 right-4 left-4 p-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            } text-white slide-in`;
+            notification.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="rtl:text-right ltr:text-left">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="rtl:mr-2 ltr:ml-2 text-white opacity-75 hover:opacity-100">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+
+    <!-- Service Worker Script -->
+    <script>
+        // Service Worker content will be generated separately
+        const swContent = `
+const CACHE_NAME = 'neurophysiology-tracker-v1';
+const urlsToCache = [
+  '/',
+  '/neurophysiology_multilingual.html',
+  'https://cdn.tailwindcss.com',
+  'https://cdn.jsdelivr.net/npm/chart.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      }
+    )
+  );
+});
+        `;
+        
+        // Create service worker blob
+        const swBlob = new Blob([swContent], { type: 'application/javascript' });
+        const swUrl = URL.createObjectURL(swBlob);
+        
+        // Register service worker with blob URL
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register(swUrl);
+        }
+    </script>
+</body>
+</html>
