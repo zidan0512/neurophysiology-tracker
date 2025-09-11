@@ -1,0 +1,58 @@
+# Server Configuration
+NODE_ENV=development
+PORT=3000
+HOST=localhost
+
+# Database Configuration
+DB_PATH=./neurophysiology.db
+DB_BACKUP_PATH=./backups/
+DB_MAX_CONNECTIONS=10
+
+# Security Configuration
+JWT_SECRET=your-super-secret-jwt-key-here-change-in-production
+SESSION_SECRET=your-session-secret-key-here
+BCRYPT_ROUNDS=12
+
+# CORS Configuration
+CORS_ORIGIN=http://localhost:3000
+ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
+
+# File Upload Configuration
+MAX_FILE_SIZE=5242880
+UPLOAD_PATH=./uploads/
+
+# Logging Configuration
+LOG_LEVEL=info
+LOG_FILE=./logs/app.log
+
+# Backup Configuration
+AUTO_BACKUP=true
+BACKUP_INTERVAL=24
+MAX_BACKUPS=30
+
+# PWA Configuration
+PWA_NAME=Neurophysiology Tracker
+PWA_SHORT_NAME=NeuroTracker
+PWA_DESCRIPTION=Advanced neurophysiology case tracking application
+
+# Push Notifications (Optional)
+VAPID_PUBLIC_KEY=your-vapid-public-key
+VAPID_PRIVATE_KEY=your-vapid-private-key
+VAPID_SUBJECT=mailto:admin@neurophysiology-tracker.com
+
+# Email Configuration (Optional)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+
+# Production Settings (Override in production)
+# NODE_ENV=production
+# PORT=443
+# DB_PATH=/var/lib/neurophysiology/neurophysiology.db
+# SSL_CERT_PATH=/etc/ssl/certs/neurophysiology.crt
+# SSL_KEY_PATH=/etc/ssl/private/neurophysiology.key
